@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Premium AI-Powered Healthcare Management System — Manage patients, doctors, appointments, billing, and prescriptions with an intelligent dashboard.">
+    <title>Premium Healthcare Management System | AI-Powered</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="header-left">
+                <h1><i class="fas fa-hospital-user"></i> Premium Healthcare System</h1>
+                <p>AI-Powered Management Platform • Complete Healthcare Solution</p>
+            </div>
+            <div class="header-controls">
+                <button class="icon-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode" id="darkModeBtn"><i
+                        class="fas fa-moon"></i></button>
+                <button class="icon-btn" onclick="exportData()" title="Export Data" id="exportBtn"><i
+                        class="fas fa-download"></i></button>
+                <button class="icon-btn" onclick="printReport()" title="Print Report" id="printBtn"><i
+                        class="fas fa-print"></i></button>
+                <button class="icon-btn" onclick="resetSystem()" title="Reset System" id="resetBtn"><i
+                        class="fas fa-sync-alt"></i></button>
+            </div>
+        </header>
+
+        <!-- ===== NAVIGATION TABS ===== -->
+        <nav class="tabs" id="mainNav">
+            <button class="tab-btn active" data-tab="dashboard" onclick="switchTab('dashboard')"><i
+                    class="fas fa-chart-line"></i> Dashboard</button>
+            <button class="tab-btn" data-tab="patients" onclick="switchTab('patients')"><i class="fas fa-users"></i>
+                Patients</button>
+            <button class="tab-btn" data-tab="doctors" onclick="switchTab('doctors')"><i class="fas fa-user-md"></i>
+                Doctors</button>
+            <button class="tab-btn" data-tab="appointments" onclick="switchTab('appointments')"><i
+                    class="fas fa-calendar-check"></i> Appointments</button>
+            <button class="tab-btn" data-tab="billing" onclick="switchTab('billing')"><i class="fas fa-credit-card"></i>
+                Billing</button>
+            <button class="tab-btn" data-tab="prescriptions" onclick="switchTab('prescriptions')"><i
+                    class="fas fa-prescription-bottle"></i> Prescriptions</button>
+            <button class="tab-btn" data-tab="liveHospital" onclick="switchTab('liveHospital')"><i
+                    class="fas fa-satellite-dish"></i> Live Hospital</button>
+        </nav>
+
+        <!-- ===== DASHBOARD TAB ===== -->
+        <section id="dashboard" class="tab-content active">
+            <div class="stats-grid" id="statsGrid">
+                <div class="loading-overlay">
+                    <div class="spinner"></div> Loading dashboard...
+                </div>
+            </div>
+            <div class="charts-container">
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-line"></i> Revenue Trend</h3>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+                <div class="chart-card">
+                    <h3><i class="fas fa-chart-pie"></i> Appointment Statistics</h3>
+                    <canvas id="appointmentsChart"></canvas>
+                </div>
+            </div>
+            <div class="table-container">
+                <h3><i class="fas fa-clock"></i> Upcoming Appointments</h3>
+                <table id="upcomingAppointments">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date & Time</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PATIENTS TAB ===== -->
+        <section id="patients" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-users"></i> Patient Management</h2>
+                <button class="btn-primary" onclick="showAddPatientModal()" id="addPatientBtn"><i
+                        class="fas fa-plus"></i> Add New Patient</button>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="patientSearch" placeholder="Search by name, ID, or contact..."
+                    onkeyup="searchPatients()">
+            </div>
+            <div class="table-container">
+                <table id="patientsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Contact</th>
+                            <th>Medical History</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== DOCTORS TAB ===== -->
+        <section id="doctors" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-user-md"></i> Doctor Management</h2>
+                <button class="btn-primary" onclick="showAddDoctorModal()" id="addDoctorBtn"><i class="fas fa-plus"></i>
+                    Add New Doctor</button>
+            </div>
+            <div class="table-container">
+                <table id="doctorsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Contact</th>
+                            <th>Schedule</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== APPOINTMENTS TAB ===== -->
+        <section id="appointments" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-calendar-check"></i> Appointments</h2>
+                <button class="btn-primary" onclick="showAddAppointmentModal()" id="addAppointmentBtn"><i
+                        class="fas fa-plus"></i> Schedule Appointment</button>
+            </div>
+            <div class="table-container">
+                <table id="appointmentsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date & Time</th>
+                            <th>Reason</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== BILLING TAB ===== -->
+        <section id="billing" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-credit-card"></i> Billing & Payments</h2>
+                <button class="btn-primary" onclick="showAddBillModal()" id="addBillBtn"><i
+                        class="fas fa-file-invoice-dollar"></i> Generate Bill</button>
+            </div>
+            <div class="table-container">
+                <table id="billsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Description</th>
+                            <th>Amount</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== PRESCRIPTIONS TAB ===== -->
+        <section id="prescriptions" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-prescription-bottle"></i> Prescriptions</h2>
+                <button class="btn-primary" onclick="showAddPrescriptionModal()" id="addPrescriptionBtn"><i
+                        class="fas fa-prescription"></i> New Prescription</button>
+            </div>
+            <div class="table-container">
+                <table id="prescriptionsTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Medication</th>
+                            <th>Dosage</th>
+                            <th>Duration</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="8" class="loading-overlay">
+                                <div class="spinner"></div> Loading...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ===== LIVE HOSPITAL TAB ===== -->
+        <section id="liveHospital" class="tab-content">
+            <div class="section-top">
+                <h2><i class="fas fa-satellite-dish"></i> Live Healthcare Registries</h2>
+                <p class="section-subtitle">Real-time lookup in U.S. NPPES NPI Registry & OpenFDA Drug Database</p>
+            </div>
+
+            <div class="live-grid">
+                <!-- NPI Search Card -->
+                <div class="live-card">
+                    <div class="live-card-header">
+                        <h3><i class="fas fa-user-md-slash"></i> Search U.S. NPI Doctors</h3>
+                        <span class="live-badge badge-info">NPPES Registry</span>
+                    </div>
+                    <form id="npiSearchForm" onsubmit="handleNPISearch(event)">
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="npiFirstName">First Name</label>
+                                <input type="text" id="npiFirstName" placeholder="e.g. John">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="npiLastName">Last Name</label>
+                                <input type="text" id="npiLastName" placeholder="e.g. Smith">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-6">
+                                <label for="npiCity">City</label>
+                                <input type="text" id="npiCity" placeholder="e.g. Boston">
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="npiState">State (2 letters)</label>
+                                <input type="text" id="npiState" placeholder="e.g. MA" maxlength="2"
+                                    style="text-transform: uppercase;">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="npiTaxonomy">Specialty / Taxonomy</label>
+                            <input type="text" id="npiTaxonomy" placeholder="e.g. Cardiology, Pediatrics">
+                        </div>
+                        <div class="live-actions">
+                            <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Search
+                                Providers</button>
+                            <button type="button" class="btn-outline" onclick="clearNPISearch()"><i
+                                    class="fas fa-eraser"></i> Clear</button>
+                        </div>
+                    </form>
+                    <div class="live-results-container">
+                        <div id="npiLoader" class="live-loader hidden">
+                            <div class="spinner"></div> Searching NPPES Registry...
+                        </div>
+                        <div id="npiResults" class="live-results-list">
+                            <div class="empty-state">
+                                <i class="fas fa-search-plus"></i>
+                                <p>Search by provider name, specialty, or location to fetch live NPI registry details.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OpenFDA Search Card -->
+                <div class="live-card">
+                    <div class="live-card-header">
+                        <h3><i class="fas fa-prescription-bottle-alt"></i> Search OpenFDA Drugs</h3>
+                        <span class="live-badge badge-success">FDA Database</span>
+                    </div>
+                    <form id="fdaSearchForm" onsubmit="handleFDASearch(event)">
+                        <div class="form-group">
+                            <label for="fdaDrugName">Drug Name (Brand or Generic) *</label>
+                            <input type="text" id="fdaDrugName" placeholder="e.g. Ibuprofen, Lisinopril, Advil"
+                                required>
+                        </div>
+                        <div class="live-actions">
+                            <button type="submit" class="btn-primary"><i class="fas fa-search"></i> Search
+                                Drugs</button>
+                            <button type="button" class="btn-outline" onclick="clearFDASearch()"><i
+                                    class="fas fa-eraser"></i> Clear</button>
+                        </div>
+                    </form>
+                    <div class="live-results-container">
+                        <div id="fdaLoader" class="live-loader hidden">
+                            <div class="spinner"></div> Searching FDA Database...
+                        </div>
+                        <div id="fdaResults" class="live-results-list">
+                            <div class="empty-state">
+                                <i class="fas fa-pills"></i>
+                                <p>Enter a drug brand or generic name to fetch active ingredients, purpose, and
+                                    warnings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div><!-- /.container -->
+
+    <!-- ===== AI CHAT ASSISTANT ===== -->
+    <div class="ai-assistant">
+        <div class="ai-toggle" onclick="toggleAIChat()" id="aiToggleBtn">
+            <i class="fas fa-robot"></i>
+        </div>
+        <div class="ai-chat-window" id="aiChatWindow">
+            <div class="ai-header">
+                <h3><i class="fas fa-brain"></i> AI Health Assistant</h3>
+                <button class="ai-close" onclick="toggleAIChat()">✕</button>
+            </div>
+            <div class="ai-messages" id="aiMessages">
+                <div class="message ai">
+                    <div class="message-content">
+                        👋 Welcome! I'm your AI Health Assistant.<br><br>
+                        I can help you with:<br>
+                        • 💊 Medical symptoms & conditions<br>
+                        • 📅 Appointment scheduling guidance<br>
+                        • 💰 Billing & payment queries<br>
+                        • 💪 Daily health tips<br>
+                        • 📊 System statistics<br><br>
+                        How can I assist you today?
+                    </div>
+                </div>
+            </div>
+            <div class="ai-input-area">
+                <input type="text" id="aiInput" placeholder="Ask me anything..." onkeypress="handleAIKeypress(event)">
+                <button onclick="sendAIMessage()" id="aiSendBtn"><i class="fas fa-paper-plane"></i></button>
+            </div>
+            <div class="suggestion-buttons">
+                <button class="suggestion-btn" onclick="sendSuggestion('Flu symptoms')">🩺 Flu symptoms</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('How to schedule appointment?')">📅
+                    Schedule</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('Health tips')">💪 Health tips</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('System statistics')">📊 Statistics</button>
+                <button class="suggestion-btn" onclick="sendSuggestion('Emergency?')">🚨 Emergency</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODALS ===== -->
+
+    <!-- Patient Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="patientModalTitle"><i class="fas fa-user-plus"></i> Add Patient</h2>
+                <button class="close" onclick="closeModal('patientModal')">&times;</button>
+            </div>
+            <form id="patientForm">
+                <input type="hidden" id="patientEditId">
+                <div class="form-group">
+                    <label for="patientName">Full Name *</label>
+                    <input type="text" id="patientName" placeholder="Enter patient name" required>
+                </div>
+                <div class="form-group">
+                    <label for="patientAge">Age *</label>
+                    <input type="number" id="patientAge" placeholder="Enter age" min="0" max="150" required>
+                </div>
+                <div class="form-group">
+                    <label for="patientGender">Gender *</label>
+                    <select id="patientGender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="patientContact">Contact Number *</label>
+                    <input type="text" id="patientContact" placeholder="Enter contact number" required>
+                </div>
+                <div class="form-group">
+                    <label for="patientAddress">Address</label>
+                    <textarea id="patientAddress" rows="2" placeholder="Enter address"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="patientMedicalHistory">Medical History</label>
+                    <textarea id="patientMedicalHistory" rows="2"
+                        placeholder="Previous conditions, allergies, surgeries..."></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fas fa-save"></i> Save Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Doctor Modal -->
+    <div id="doctorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="doctorModalTitle"><i class="fas fa-user-md"></i> Add Doctor</h2>
+                <button class="close" onclick="closeModal('doctorModal')">&times;</button>
+            </div>
+            <form id="doctorForm">
+                <input type="hidden" id="doctorEditId">
+                <div class="form-group">
+                    <label for="doctorName">Doctor Name *</label>
+                    <input type="text" id="doctorName" placeholder="Enter doctor name" required>
+                </div>
+                <div class="form-group">
+                    <label for="doctorSpecialization">Specialization *</label>
+                    <input type="text" id="doctorSpecialization" placeholder="e.g., Cardiology, Neurology" required>
+                </div>
+                <div class="form-group">
+                    <label for="doctorContact">Contact *</label>
+                    <input type="text" id="doctorContact" placeholder="Enter contact number" required>
+                </div>
+                <div class="form-group">
+                    <label for="doctorSchedule">Schedule</label>
+                    <input type="text" id="doctorSchedule" placeholder="e.g., Mon-Fri 9AM-5PM">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fas fa-save"></i> Save Doctor</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Appointment Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-plus"></i> Schedule Appointment</h2>
+                <button class="close" onclick="closeModal('appointmentModal')">&times;</button>
+            </div>
+            <form id="appointmentForm">
+                <div class="form-group">
+                    <label for="appointmentPatientId">Patient *</label>
+                    <select id="appointmentPatientId" required>
+                        <option value="">Select Patient</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDoctorId">Doctor *</label>
+                    <select id="appointmentDoctorId" required>
+                        <option value="">Select Doctor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDateTime">Date & Time *</label>
+                    <input type="datetime-local" id="appointmentDateTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentReason">Reason</label>
+                    <textarea id="appointmentReason" rows="2" placeholder="Reason for visit"></textarea>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fas fa-check"></i> Schedule Appointment</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bill Modal -->
+    <div id="billModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-file-invoice"></i> Generate Bill</h2>
+                <button class="close" onclick="closeModal('billModal')">&times;</button>
+            </div>
+            <form id="billForm">
+                <div class="form-group">
+                    <label for="billPatientId">Patient *</label>
+                    <select id="billPatientId" required>
+                        <option value="">Select Patient</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="billDescription">Description *</label>
+                    <input type="text" id="billDescription" placeholder="e.g., Cardiology Consultation" required>
+                </div>
+                <div class="form-group">
+                    <label for="billAmount">Amount ($) *</label>
+                    <input type="number" id="billAmount" placeholder="Enter amount" min="0" step="0.01" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fas fa-receipt"></i> Generate Bill</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Prescription Modal -->
+    <div id="prescriptionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-prescription"></i> New Prescription</h2>
+                <button class="close" onclick="closeModal('prescriptionModal')">&times;</button>
+            </div>
+            <form id="prescriptionForm">
+                <div class="form-group">
+                    <label for="prescriptionPatientId">Patient *</label>
+                    <select id="prescriptionPatientId" required>
+                        <option value="">Select Patient</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prescriptionDoctorId">Doctor *</label>
+                    <select id="prescriptionDoctorId" required>
+                        <option value="">Select Doctor</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="prescriptionMedication">Medication *</label>
+                    <input type="text" id="prescriptionMedication" placeholder="e.g., Lisinopril" required>
+                </div>
+                <div class="form-group">
+                    <label for="prescriptionDosage">Dosage *</label>
+                    <input type="text" id="prescriptionDosage" placeholder="e.g., 500mg twice daily" required>
+                </div>
+                <div class="form-group">
+                    <label for="prescriptionDuration">Duration</label>
+                    <input type="text" id="prescriptionDuration" placeholder="e.g., 7 days, 2 weeks">
+                </div>
+                <button type="submit" class="btn-primary" style="width:100%;justify-content:center;"><i
+                        class="fas fa-save"></i> Save Prescription</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== OFFLINE OVERLAY ===== -->
+    <div id="offlineOverlay" class="offline-overlay">
+        <div class="offline-card">
+            <div class="offline-icon-wrapper">
+                <i class="fas fa-wifi-slash offline-pulse-icon"></i>
+            </div>
+            <h2>Flask Backend Offline</h2>
+            <p class="offline-desc">We are unable to connect to the REST API server at <code id="offlineApiBase">http://localhost:5000</code>.</p>
+            
+            <div class="offline-instruction">
+                <p class="instruction-title"><strong>To start the server:</strong></p>
+                <ul>
+                    <li><i class="fas fa-terminal"></i> Run <code>python app.py</code> in the folder.</li>
+                    <li><i class="fas fa-window-maximize"></i> Or double-click the <code>start.bat</code> file.</li>
+                </ul>
+            </div>
+            
+            <div class="offline-status">
+                <div class="spinner spinner-sm"></div>
+                <span>Trying to reconnect automatically...</span>
+            </div>
+            
+            <div class="offline-actions">
+                <button type="button" class="btn-primary" id="retryConnectBtn" onclick="checkBackendConnectivity()"><i class="fas fa-sync-alt"></i> Retry Connection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Logic -->
+    <script src="app.js"></script>
+
+</body>
+
+</html>

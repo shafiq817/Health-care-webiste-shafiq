@@ -1,0 +1,114 @@
+[
+  {
+    "id": "D2001",
+    "name": "Dr. Sarah Johnson",
+    "specialization": "Cardiology",
+    "contact": "+1 555-0201",
+    "schedule": "Mon-Wed 9AM-5PM",
+    "available": true
+  },
+  {
+    "id": "D2002",
+    "name": "Dr. Michael Chen",
+    "specialization": "Neurology",
+    "contact": "+1 555-0202",
+    "schedule": "Tue-Thu 10AM-6PM",
+    "available": true
+  },
+  {
+    "id": "D2003",
+    "name": "Dr. Emily Brown",
+    "specialization": "Pediatrics",
+    "contact": "+1 555-0203",
+    "schedule": "Mon-Fri 8AM-4PM",
+    "available": true
+  },
+  {
+    "id": "D2004",
+    "name": "Dr. James Wilson",
+    "specialization": "Orthopedics",
+    "contact": "+1 555-0204",
+    "schedule": "Mon-Fri 9AM-5PM",
+    "available": true
+  },
+  {
+    "id": "D2005",
+    "name": "Dr. Sophia Martinez",
+    "specialization": "Dermatology",
+    "contact": "+1 555-0205",
+    "schedule": "Mon-Thu 8AM-3PM",
+    "available": true
+  },
+  {
+    "id": "D2006",
+    "name": "Dr. David K. Vance",
+    "specialization": "Psychiatry",
+    "contact": "+1 555-0206",
+    "schedule": "Tue-Fri 11AM-7PM",
+    "available": true
+  },
+  {
+    "id": "D2007",
+    "name": "Dr. Linda Jenkins",
+    "specialization": "Endocrinology",
+    "contact": "+1 555-0207",
+    "schedule": "Mon-Wed 10AM-4PM",
+    "available": true
+  },
+  {
+    "id": "D2008",
+    "name": "Dr. Robert Chen",
+    "specialization": "Ophthalmology",
+    "contact": "+1 555-0208",
+    "schedule": "Wed-Fri 9AM-5PM",
+    "available": true
+  },
+  {
+    "id": "D2009",
+    "name": "Dr. Clara Oswald",
+    "specialization": "Internal Medicine",
+    "contact": "+1 555-0209",
+    "schedule": "Mon-Fri 8AM-4PM",
+    "available": true
+  },
+  {
+    "id": "D2010",
+    "name": "Dr. Jonathan Crane",
+    "specialization": "Psychiatry",
+    "contact": "+1 555-0210",
+    "schedule": "Mon-Thu 1PM-8PM",
+    "available": true
+  },
+  {
+    "id": "D2011",
+    "name": "Dr. Alice Hamilton",
+    "specialization": "Gynecology",
+    "contact": "+1 555-0211",
+    "schedule": "Tue-Thu 9AM-4PM",
+    "available": true
+  },
+  {
+    "id": "D2012",
+    "name": "Dr. Richard Webber",
+    "specialization": "General Surgery",
+    "contact": "+1 555-0212",
+    "schedule": "Mon-Fri 7AM-3PM",
+    "available": true
+  },
+  {
+    "id": "D2013",
+    "name": "Dr. Miranda Bailey",
+    "specialization": "General Surgery",
+    "contact": "+1 555-0213",
+    "schedule": "Mon-Fri 8AM-4PM",
+    "available": true
+  },
+  {
+    "id": "D2014",
+    "name": "Dr. Derek Shepherd",
+    "specialization": "Neurosurgery",
+    "contact": "+1 555-0214",
+    "schedule": "Mon-Wed 9AM-6PM",
+    "available": true
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "B4001",
+    "patientId": "P1001",
+    "description": "Cardiology Consultation",
+    "amount": 250,
+    "date": "2026-06-07",
+    "paid": true
+  },
+  {
+    "id": "B4002",
+    "patientId": "P1003",
+    "description": "MRI Brain Scan",
+    "amount": 1200,
+    "date": "2026-06-07",
+    "paid": true
+  },
+  {
+    "id": "B4003",
+    "patientId": "P1004",
+    "description": "Asthma Treatment Package",
+    "amount": 450,
+    "date": "2026-06-07",
+    "paid": false
+  }
+]

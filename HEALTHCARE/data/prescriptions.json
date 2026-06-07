@@ -1,0 +1,22 @@
+[
+  {
+    "id": "R5001",
+    "patientId": "P1001",
+    "doctorId": "D2001",
+    "medication": "Lisinopril",
+    "dosage": "10mg once daily",
+    "duration": "30 days",
+    "date": "2026-06-07",
+    "status": "Active"
+  },
+  {
+    "id": "R5002",
+    "patientId": "P1003",
+    "doctorId": "D2002",
+    "medication": "Metformin",
+    "dosage": "500mg twice daily",
+    "duration": "90 days",
+    "date": "2026-06-07",
+    "status": "Active"
+  }
+]

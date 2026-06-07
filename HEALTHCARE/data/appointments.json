@@ -1,0 +1,18 @@
+[
+  {
+    "id": "A3001",
+    "patientId": "P1001",
+    "doctorId": "D2001",
+    "dateTime": "2026-06-08T10:00",
+    "status": "Scheduled",
+    "reason": "Routine cardiac checkup"
+  },
+  {
+    "id": "A3002",
+    "patientId": "P1003",
+    "doctorId": "D2002",
+    "dateTime": "2026-06-08T14:00",
+    "status": "Scheduled",
+    "reason": "Follow-up neurological exam"
+  }
+]

@@ -1,0 +1,5 @@
+- [x] Update app.js to connect UI to Flask backend APIs (dashboard, patients, doctors, appointments, bills, prescriptions)
+- [x] Remove/stop using localStorage CRUD for those entities; replace with fetch-based CRUD
+- [x] Fix dark mode initialization bug (darkMode variable must be defined before DOMContentLoaded logic)
+- [x] Ensure UI tables/forms update after each mutation (add/edit/delete/pay/status update/prescribe)
+- [x] Run backend (python app.py) and validate in browser console for errors
