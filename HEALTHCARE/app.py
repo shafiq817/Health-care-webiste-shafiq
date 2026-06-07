@@ -484,4 +484,5 @@ if __name__ == '__main__':
     print("  [>] Running at: http://localhost:5000")
     print("  [>] Data stored in: ./data/")
     print("=" * 55 + "\n")
-    app.run(debug=True, port=5000)
+import os
+app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
