@@ -1,2 +1,25 @@
 # Health-care-webiste-shafiq
-A Healthcare Management System is a software application designed to streamline and automate healthcare operations. It helps manage patient records, appointment scheduling, doctor information, medical history, prescriptions, billing, and reports in a centralized platform.
+# Healthcare Management System
+
+## Overview
+A web-based healthcare management application for managing patients, doctors, appointments, prescriptions, and billing.
+
+## Features
+- Patient Management
+- Doctor Management
+- Appointment Scheduling
+- Prescription Tracking
+- Billing Management
+
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
+- Python
+- JSON
+
+## Project Structure
+(brief folder structure)
+
+## Author
+Shaik Mohammed Shafiq
